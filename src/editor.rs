@@ -1,9 +1,7 @@
 use crossterm::event::{read, Event::Key, KeyCode::Char};
 use crossterm::terminal::{disable_raw_mode, enable_raw_mode};
 
-pub struct Editor {
-
-}
+pub struct Editor {}
 
 impl Editor {
     pub fn default() -> Self {            
@@ -14,17 +12,14 @@ impl Editor {
         loop {
             match read() {
                 Ok(Key(event)) => {
-                    println!("{:?} \r", event);
-                    match event.code {
-                        Char(c) => {
-                            if c == 'q' {
-                                break;
-                            }
-                        },
-                        _ => (),
+                    println!("{event:?} \r");
+                    if let Char(c) = event.code {
+                        if c == 'q' {
+                            break;
+                        }
                     }
                 },
-                Err(err) => println!("Error: {}", err),
+                Err(err) => println!("Error: {err}"),
                 _ => ()
             }
         }
